@@ -80,7 +80,7 @@ class ProcessGroup(RestResource):
         if not self._is_ok(resp.status_code):
             self._throw_exc(resp)
 
-#       nifi returns a result set that contains an arrays of child objects. 
+#       nifi returns a result set that contains an arrays of child objects.
 #       The key of the arrays in the set is not the same as the resource name (e.g. output-ports vs outputPorts)
 #       Instead of keeping a map of resource and key names using this dirty hack to take a first value
         result_set = resp.json()
@@ -145,7 +145,7 @@ class Flow(RestResource):
 
 class Nifi:
     def __init__(self, url):
-        self.__url = url
+        self.__url = '%s/nifi-api' % (url)
         self.__session = requests
 
     def resource(self, rawtype):

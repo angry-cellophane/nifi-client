@@ -12,7 +12,7 @@ def setup_module(module):
     resp = requests.get('http://localhost:8080/nifi-api/flow/search-results?q=')
     global processor_id, nifi, resource
     processor_id = resp.json()['searchResultsDTO']['processorResults'][0]['id']
-    nifi = Nifi('http://localhost:8080/nifi-api')
+    nifi = Nifi('http://localhost:8080')
     resource = nifi.resource('processors')
 
 

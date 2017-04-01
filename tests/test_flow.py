@@ -7,7 +7,7 @@ resource = {}
 
 def setup_module(module):
     global resource
-    nifi = Nifi('http://localhost:8080/nifi-api')
+    nifi = Nifi('http://localhost:8080')
     resource = nifi.resource('flow')
 
 

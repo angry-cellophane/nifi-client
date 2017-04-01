@@ -8,7 +8,7 @@ flow_res = {}
 
 def setup_module(module):
     global pgs_res, flow_res
-    nifi = Nifi('http://localhost:8080/nifi-api')
+    nifi = Nifi('http://localhost:8080')
     pgs_res = nifi.resource('process-groups')
     flow_res = nifi.resource('flow')
 

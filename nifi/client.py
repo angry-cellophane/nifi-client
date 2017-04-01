@@ -64,8 +64,7 @@ class ProcessGroup(RestResource):
 
     def create_child(self, pg_id, resource_type, processor):
         processor = self.__init_version(processor)
-        if resource_type not in ALLOWED_RESOURCES:
-            raise Exception('Creation a resource of type %s for the process group %s are not allowed, only the following type: %s' % (resource_type, pg_id, ALLOWED_RESOURCES))
+        self.__check_res_type(pg_id, resource_type)
 
         url = '%s/%s/processors' % (self._url, pg_id)
         resp = self._session.post(url, headers=HEADERS, data=json.dumps(processor))
@@ -75,7 +74,18 @@ class ProcessGroup(RestResource):
         return resp.json()
 
     def list_children(self, pg_id, resource_type):
-        pass
+        self.__check_res_type(pg_id, resource_type)
+        url = '%s/%s/%s' % (self._url, pg_id, resource_type)
+        resp = self._session.get(url)
+        if not self._is_ok(resp.status_code):
+            self._throw_exc(resp)
+
+#       nifi returns a result set that contains an arrays of child objects. 
+#       The key of the arrays in the set is not the same as the resource name (e.g. output-ports vs outputPorts)
+#       Instead of keeping a map of resource and key names using this dirty hack to take a first value
+        result_set = resp.json()
+        set_key = result_set.keys()[0]
+        return result_set[set_key]
 
     def __init_version(self, obj):
         if 'revision' not in obj:
@@ -87,6 +97,9 @@ class ProcessGroup(RestResource):
 
         return obj
 
+    def __check_res_type(self, pg_id, res_type):
+        if res_type not in ALLOWED_RESOURCES:
+            raise Exception('Creation a resource of type %s for the process group %s are not allowed, only the following type: %s' % (res_type, pg_id, ALLOWED_RESOURCES))
 
 
 class Flow(RestResource):

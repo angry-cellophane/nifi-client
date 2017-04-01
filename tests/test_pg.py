@@ -71,3 +71,33 @@ def test_create_child():
         pgs_res.create_child(created_pg['id'], 'processors', processor)
     finally:
         pgs_res.delete(created_pg['id'], created_pg['revision']['version'])
+
+
+def test_list_children():
+    pg = {
+            'component': {
+                'name': 'test'
+            },
+         }
+
+    flow_id = flow_res.nifi_flow_id()
+
+    created_pg = pgs_res.create(flow_id, pg)
+    assert 'id' in created_pg
+    assert 'version' in created_pg['revision']
+
+    try:
+        processor = {
+                'component': {
+                    'name': 'test',
+                    'type': 'org.apache.nifi.processors.standard.PutFile'
+                }
+        }
+
+        pg_id = created_pg['id']
+        pgs_res.create_child(pg_id, 'processors', processor)
+        pgs_res.create_child(pg_id, 'processors', processor)
+        processors = pgs_res.list_children(pg_id, 'processors')
+        assert len(processors) == 2
+    finally:
+        pgs_res.delete(created_pg['id'], created_pg['revision']['version'])

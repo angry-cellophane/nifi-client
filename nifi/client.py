@@ -2,6 +2,7 @@ import json
 import requests
 
 HEADERS = {'Content-Type': 'application/json'}
+ALLOWED_RESOURCES = ['processors', 'connections', 'output-ports']
 
 
 class RestResource:
@@ -9,7 +10,7 @@ class RestResource:
         self.__url = url
         self.__session = session
 
-    def get(self, id):
+    def find(self, id):
         resp = self.__session.get('%s/%s' % (self.__url, id))
         if self.__is_ok(resp.status_code):
             return resp.json()
@@ -20,13 +21,6 @@ class RestResource:
 
     def update(self, payload):
         resp = self.__session.put('%s/%s' % (self.__url, payload['id']), headers=HEADERS, data=json.dumps(payload))
-        if self.__is_ok(resp.status_code):
-            return resp.json()
-        else:
-            self.__exception(resp)
-
-    def create(self, payload):
-        resp = self.__session.post(self.__url, headers=HEADERS, data=json.dumps(payload))
         if self.__is_ok(resp.status_code):
             return resp.json()
         else:
@@ -49,7 +43,6 @@ class RestResource:
         raise Exception('Server returned exception: %s %s' % (resp.status_code, resp.text))
 
 
-ALLOWED_RESOURCES = ['processors', 'connections', 'output-ports']
 
 
 class Nifi:

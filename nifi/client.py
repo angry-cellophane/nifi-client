@@ -62,7 +62,7 @@ class ProcessGroup(RestResource):
 
         return resp.json()
 
-    def create_child(self, resource_type, pg_id, processor):
+    def create_child(self, pg_id, resource_type, processor):
         processor = self.__init_version(processor)
         if resource_type not in ALLOWED_RESOURCES:
             raise Exception('Creation a resource of type %s for the process group %s are not allowed, only the following type: %s' % (resource_type, pg_id, ALLOWED_RESOURCES))
@@ -73,6 +73,9 @@ class ProcessGroup(RestResource):
             self._throw_exc(resp)
 
         return resp.json()
+
+    def list_children(self, pg_id, resource_type):
+        pass
 
     def __init_version(self, obj):
         if 'revision' not in obj:

@@ -68,6 +68,6 @@ def test_create_child():
                     'type': 'org.apache.nifi.processors.standard.PutFile'
                 }
         }
-        pgs_res.create_child('processors', created_pg['id'], processor)
+        pgs_res.create_child(created_pg['id'], 'processors', processor)
     finally:
         pgs_res.delete(created_pg['id'], created_pg['revision']['version'])

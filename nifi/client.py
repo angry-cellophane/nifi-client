@@ -54,12 +54,36 @@ class ProcessGroup(RestResource):
         RestResource.__init__(self, '%s/process-groups' % (url), session)
 
     def create(self, parent_id, pg):
+        pg = self.__init_version(pg)
         url = '%s/%s/process-groups' % (self._url, parent_id)
         resp = self._session.post(url, headers=HEADERS, data=json.dumps(pg))
         if not self._is_ok(resp.status_code):
             self._throw_exc(resp)
 
         return resp.json()
+
+    def create_child(self, resource_type, pg_id, processor):
+        processor = self.__init_version(processor)
+        if resource_type not in ALLOWED_RESOURCES:
+            raise Exception('Creation a resource of type %s for the process group %s are not allowed, only the following type: %s' % (resource_type, pg_id, ALLOWED_RESOURCES))
+
+        url = '%s/%s/processors' % (self._url, pg_id)
+        resp = self._session.post(url, headers=HEADERS, data=json.dumps(processor))
+        if not self._is_ok(resp.status_code):
+            self._throw_exc(resp)
+
+        return resp.json()
+
+    def __init_version(self, obj):
+        if 'revision' not in obj:
+            obj['revision'] = {
+                'version': 0
+            }
+        elif 'version' not in obj:
+            obj['revision']['version'] = 0
+
+        return obj
+
 
 
 class Flow(RestResource):

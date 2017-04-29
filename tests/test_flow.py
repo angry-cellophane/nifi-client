@@ -38,3 +38,6 @@ def test_find_flow_id():
 def test_list_templates():
     templates = resource.list_templates()
     assert len(templates) > 0
+    for template in templates:
+        print(template)
+        assert 'id' in template

@@ -144,7 +144,7 @@ class Flow(RestResource):
     def list_templates(self):
         url = '%s/templates' % (self._url)
         resp = self._session.get(url)
-        return resp.json()
+        return resp.json()['templates']
 
 class Nifi:
     def __init__(self, url):

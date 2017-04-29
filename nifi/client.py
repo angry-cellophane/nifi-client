@@ -3,7 +3,7 @@ import requests
 import urllib
 
 HEADERS = {'Content-Type': 'application/json'}
-ALLOWED_RESOURCES = ['processors', 'connections', 'output-ports']
+ALLOWED_RESOURCES = ['processors', 'connections', 'output-ports', 'process-groups']
 
 
 class RestResource:
@@ -128,7 +128,7 @@ class ProcessGroup(RestResource):
         if not self._is_ok(resp.status_code):
             self._throw_exc(resp)
 
-        return resp.json()
+        return resp.json()['flow']
 
 class Flow(RestResource):
     def __init__(self, url, session, process_groups):

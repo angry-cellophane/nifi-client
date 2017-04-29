@@ -27,12 +27,16 @@ class RestResource:
         else:
             self._throw_exc(resp)
 
-    def delete(self, id, version, client_id={}):
-        query = {'version': version}
-        if client_id:
-            query['clientId'] = client_id
+    def delete(self, resource):
+        if 'revision' not in resource:
+            raise Exception('No revision found in %s. Please provide {"revision": {"version": <<version_value>>} }' % (resource))
 
-        url = '%s/%s?%s' % (self._url, id, urllib.urlencode(query))
+        revision = resource['revision']
+        query = {'version': revision['version']}
+        if 'clientId' in revision:
+            query['clientId'] = resource['revision']['clientId']
+
+        url = '%s/%s?%s' % (self._url, resource['id'], urllib.urlencode(query))
         resp = self._session.delete(url)
         if self._is_ok(resp.status_code):
             return resp.json()
@@ -100,6 +104,14 @@ class ProcessGroup(RestResource):
     def __check_res_type(self, pg_id, res_type):
         if res_type not in ALLOWED_RESOURCES:
             raise Exception('Creation a resource of type %s for the process group %s are not allowed, only the following type: %s' % (res_type, pg_id, ALLOWED_RESOURCES))
+
+    def instantiate_template(self, pg_id, template):
+        url = '%s/%s/template-instance' % (self._url, pg_id)
+        resp = self._session.post(url, headers=HEADERS, data=json.dumps(template))
+        if not self._is_ok(resp.status_code):
+            self._throw_exc(resp)
+
+        return resp.json()
 
 class Flow(RestResource):
     def __init__(self, url, session, process_groups):

@@ -4,13 +4,15 @@ import pytest
 
 pgs_res = {}
 flow_res = {}
+flow_id = {}
 
 
 def setup_module(module):
-    global pgs_res, flow_res
+    global pgs_res, flow_res, flow_id
     nifi = Nifi('http://localhost:8080')
     pgs_res = nifi.resource('process-groups')
     flow_res = nifi.resource('flow')
+    flow_id = flow_res.nifi_flow_id()
 
 
 def test_find_pg():
@@ -28,8 +30,6 @@ def test_create_and_delete_pg():
             },
         }
 
-    flow_id = flow_res.nifi_flow_id()
-
     created_pg = pgs_res.create(flow_id, pg)
     assert 'id' in created_pg
 
@@ -38,7 +38,7 @@ def test_create_and_delete_pg():
     assert found_pg['component']['name'] == created_pg['component']['name']
 
     revision = found_pg['revision']
-    pgs_res.delete(created_pg['id'], revision['version'])
+    pgs_res.delete(created_pg)
     found_pg = pgs_res.find(created_pg['id'])
     assert not found_pg
 
@@ -55,8 +55,6 @@ def test_create_child():
             },
          }
 
-    flow_id = flow_res.nifi_flow_id()
-
     created_pg = pgs_res.create(flow_id, pg)
     assert 'id' in created_pg
     assert 'version' in created_pg['revision']
@@ -70,7 +68,7 @@ def test_create_child():
         }
         pgs_res.create_child(created_pg['id'], 'processors', processor)
     finally:
-        pgs_res.delete(created_pg['id'], created_pg['revision']['version'])
+        pgs_res.delete(created_pg)
 
 
 def test_list_children():
@@ -79,8 +77,6 @@ def test_list_children():
                 'name': 'test'
             },
          }
-
-    flow_id = flow_res.nifi_flow_id()
 
     created_pg = pgs_res.create(flow_id, pg)
     assert 'id' in created_pg
@@ -100,4 +96,21 @@ def test_list_children():
         processors = pgs_res.list_children(pg_id, 'processors')
         assert len(processors) == 2
     finally:
-        pgs_res.delete(created_pg['id'], created_pg['revision']['version'])
+        pgs_res.delete(created_pg)
+
+def test_instantiate_template():
+    templates = flow_res.list_templates()
+    assert len(templates) > 0
+
+    template = templates[0]
+
+    pg = {
+            'component': {
+                'name': 'test templates'
+            },
+         }
+
+    created_pg = pgs_res.create(flow_id, pg)
+
+    created_template = pgs_res.instantiate_template(created_pg['id'], {'templateId': template['id'], 'originX': 0.0, 'originY': 0.0})
+    pgs_res.delete(created_pg)

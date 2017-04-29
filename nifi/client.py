@@ -101,7 +101,6 @@ class ProcessGroup(RestResource):
         if res_type not in ALLOWED_RESOURCES:
             raise Exception('Creation a resource of type %s for the process group %s are not allowed, only the following type: %s' % (res_type, pg_id, ALLOWED_RESOURCES))
 
-
 class Flow(RestResource):
     def __init__(self, url, session, process_groups):
         RestResource.__init__(self, '%s/flow' % (url), session)
@@ -142,6 +141,10 @@ class Flow(RestResource):
 
         raise Exception('Cannot find flow id')
 
+    def list_templates(self):
+        url = '%s/templates' % (self._url)
+        resp = self._session.get(url)
+        return resp.json()
 
 class Nifi:
     def __init__(self, url):

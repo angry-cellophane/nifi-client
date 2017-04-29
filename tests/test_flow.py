@@ -34,3 +34,7 @@ def test_stop_pg():
 def test_find_flow_id():
     id = resource.nifi_flow_id()
     assert id.strip()
+
+def test_list_templates():
+    templates = resource.list_templates()
+    assert len(templates) > 0

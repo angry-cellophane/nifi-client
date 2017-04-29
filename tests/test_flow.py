@@ -11,21 +11,21 @@ def setup_module(module):
     resource = nifi.resource('flow')
 
 
-def test_list_pg():
-    pgs = resource.list_pg()
+def test_list_pgs():
+    pgs = resource.list_pgs()
     assert len(pgs) > 0
     assert 'id' in pgs[0]
 
 
 def test_start_pg():
-    pg = resource.list_pg()[0]
+    pg = resource.list_pgs()[0]
     print(pg['id'])
     assert 'id' in pg
     resource.start_pg(pg['id'])
 
 
 def test_stop_pg():
-    pg = resource.list_pg()[0]
+    pg = resource.list_pgs()[0]
     print(pg['id'])
     assert 'id' in pg
     resource.stop_pg(pg['id'])

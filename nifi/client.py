@@ -156,12 +156,12 @@ class Flow(RestResource):
 
         return resp.json()['searchResultsDTO']
 
-    def list_pg(self):
+    def list_pgs(self):
         res = self.__search('')
         return res['processGroupResults']
 
     def nifi_flow_id(self):
-        pgs = self.list_pg() # doens't contain flow id, but at least one of the processors has groupId = flow id
+        pgs = self.list_pgs() # doens't contain flow id, but at least one of the processors has groupId = flow id
         group_ids = [pg['groupId'] for pg in pgs]
         for id in group_ids:
             group = self.__pgs.find(id)

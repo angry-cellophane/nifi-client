@@ -16,7 +16,7 @@ def setup_module(module):
 
 
 def test_find_pg():
-    pgs = flow_res.list_pg()
+    pgs = flow_res.list_pgs()
     assert len(pgs) > 0
     assert 'id' in pgs[0]
     pg = pgs_res.find(pgs[0]['id'])

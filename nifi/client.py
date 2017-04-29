@@ -52,6 +52,23 @@ class RestResource:
     def _throw_exc(self, resp):
         raise Exception('Server returned exception: %s %s' % (resp.status_code, resp.text))
 
+class FlowFileQueue(RestResource):
+    def __init__(self, url, session):
+        RestResource.__init__(self, '%s/flowfile-queues' % (url), session)
+
+    def drop_requests(self, queue_id):
+        resp = self._session.post('%s/%s/drop-requests' % (self._url, queue_id))
+        if not self._is_ok(resp.status_code):
+            self._throw_exc(resp)
+
+        return resp.json()['dropRequest']
+
+    def list_requests(self, queue_id):
+        resp = self._session.post('%s/%s/listing-requests' % (self._url, queue_id))
+        if not self._is_ok(resp.status_code):
+            self._throw_exc(resp)
+
+        return resp.json()['listingRequest']
 
 class ProcessGroup(RestResource):
     def __init__(self, url, session):
@@ -171,6 +188,8 @@ class Nifi:
             return Flow(self.__url, self.__session, process_groups)
         elif type == 'process-groups':
             return ProcessGroup(self.__url, self.__session)
+        elif type == 'flowfile-queues':
+            return FlowFileQueue(self.__url, self.__session)
         elif type in ALLOWED_RESOURCES:
             return RestResource('%s/%s' % (self.__url, type), self.__session)
 

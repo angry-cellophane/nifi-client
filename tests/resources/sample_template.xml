@@ -1,0 +1,316 @@
+<?xml version="1.0" ?>
+<template encoding-version="1.0">
+  <description></description>
+  <groupId>bbd44d8f-015b-1000-323a-857b31f0e420</groupId>
+  <name>Example: redeploying running group</name>
+  <snippet>
+    <processGroups>
+      <id>bbd49233-015b-1000-0000-000000000000</id>
+      <parentGroupId>bbd44d8f-015b-1000-0000-000000000000</parentGroupId>
+      <position>
+        <x>0.0</x>
+        <y>0.0</y>
+      </position>
+      <comments></comments>
+      <contents>
+        <connections>
+          <id>bba20c4b-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+          <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+          <destination>
+            <groupId>bbd49233-015b-1000-0000-000000000000</groupId>
+            <id>bba1fccc-015b-1000-0000-000000000000</id>
+            <type>PROCESSOR</type>
+          </destination>
+          <flowFileExpiration>0 sec</flowFileExpiration>
+          <labelIndex>1</labelIndex>
+          <name></name>
+          <selectedRelationships>success</selectedRelationships>
+          <source>
+            <groupId>bbd49233-015b-1000-0000-000000000000</groupId>
+            <id>bba1a87b-015b-1000-0000-000000000000</id>
+            <type>PROCESSOR</type>
+          </source>
+          <zIndex>0</zIndex>
+        </connections>
+        <connections>
+          <id>bba26a9c-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+          <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+          <destination>
+            <groupId>bbd49233-015b-1000-0000-000000000000</groupId>
+            <id>bba25b06-015b-1000-0000-000000000000</id>
+            <type>OUTPUT_PORT</type>
+          </destination>
+          <flowFileExpiration>0 sec</flowFileExpiration>
+          <labelIndex>1</labelIndex>
+          <name></name>
+          <selectedRelationships>success</selectedRelationships>
+          <source>
+            <groupId>bbd49233-015b-1000-0000-000000000000</groupId>
+            <id>bba1fccc-015b-1000-0000-000000000000</id>
+            <type>PROCESSOR</type>
+          </source>
+          <zIndex>0</zIndex>
+        </connections>
+        <connections>
+          <id>bba29ca9-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <backPressureDataSizeThreshold>1 GB</backPressureDataSizeThreshold>
+          <backPressureObjectThreshold>10000</backPressureObjectThreshold>
+          <destination>
+            <groupId>bbd49233-015b-1000-0000-000000000000</groupId>
+            <id>bba28a55-015b-1000-0000-000000000000</id>
+            <type>OUTPUT_PORT</type>
+          </destination>
+          <flowFileExpiration>0 sec</flowFileExpiration>
+          <labelIndex>1</labelIndex>
+          <name></name>
+          <selectedRelationships>failure</selectedRelationships>
+          <source>
+            <groupId>bbd49233-015b-1000-0000-000000000000</groupId>
+            <id>bba1fccc-015b-1000-0000-000000000000</id>
+            <type>PROCESSOR</type>
+          </source>
+          <zIndex>0</zIndex>
+        </connections>
+        <outputPorts>
+          <id>bba25b06-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <position>
+            <x>2121.580617809534</x>
+            <y>517.0563813756849</y>
+          </position>
+          <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+          <name>output</name>
+          <state>STOPPED</state>
+          <type>OUTPUT_PORT</type>
+          <validationErrors>'Port 'output'' is invalid because Output connection for port 'output' is not defined.</validationErrors>
+        </outputPorts>
+        <outputPorts>
+          <id>bba28a55-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <position>
+            <x>1909.5612952053766</x>
+            <y>120.9999989405677</y>
+          </position>
+          <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+          <name>errors</name>
+          <state>STOPPED</state>
+          <type>OUTPUT_PORT</type>
+          <validationErrors>'Port 'errors'' is invalid because Output connection for port 'errors' is not defined.</validationErrors>
+        </outputPorts>
+        <processors>
+          <id>bba1a87b-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <position>
+            <x>483.0000009936099</x>
+            <y>152.87048854892004</y>
+          </position>
+          <config>
+            <bulletinLevel>WARN</bulletinLevel>
+            <comments>
+                Some comments
+                Comments
+                <metadata><properties><property name="Input Directory">{{ input_directory }}</property><property name="Recurse Subdirectories">{{ recurse_subdirectories }}</property></properties></metadata>
+            </comments>
+            <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+            <descriptors>
+              <entry>
+                <key>Input Directory Location</key>
+                <value>
+                  <name>Input Directory Location</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Minimum File Age</key>
+                <value>
+                  <name>Minimum File Age</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Input Directory</key>
+                <value>
+                  <name>Input Directory</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Maximum File Age</key>
+                <value>
+                  <name>Maximum File Age</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Maximum File Size</key>
+                <value>
+                  <name>Maximum File Size</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Minimum File Size</key>
+                <value>
+                  <name>Minimum File Size</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Ignore Hidden Files</key>
+                <value>
+                  <name>Ignore Hidden Files</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Recurse Subdirectories</key>
+                <value>
+                  <name>Recurse Subdirectories</name>
+                </value>
+              </entry>
+              <entry>
+                <key>File Filter</key>
+                <value>
+                  <name>File Filter</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Path Filter</key>
+                <value>
+                  <name>Path Filter</name>
+                </value>
+              </entry>
+            </descriptors>
+            <executionNode>ALL</executionNode>
+            <lossTolerant>false</lossTolerant>
+            <penaltyDuration>30 sec</penaltyDuration>
+            <properties>
+              <entry>
+                <key>Input Directory Location</key>
+                <value>Local</value>
+              </entry>
+              <entry>
+                <key>Minimum File Age</key>
+                <value>0 sec</value>
+              </entry>
+              <entry>
+                <key>Input Directory</key>
+                <value>/tmp</value>
+              </entry>
+              <entry>
+                <key>Maximum File Age</key>
+              </entry>
+              <entry>
+                <key>Maximum File Size</key>
+              </entry>
+              <entry>
+                <key>Minimum File Size</key>
+                <value>0 B</value>
+              </entry>
+              <entry>
+                <key>Ignore Hidden Files</key>
+                <value>true</value>
+              </entry>
+              <entry>
+                <key>Recurse Subdirectories</key>
+                <value>true</value>
+              </entry>
+              <entry>
+                <key>File Filter</key>
+                <value>[^\.].*</value>
+              </entry>
+              <entry>
+                <key>Path Filter</key>
+              </entry>
+            </properties>
+            <runDurationMillis>0</runDurationMillis>
+            <schedulingPeriod>0 sec</schedulingPeriod>
+            <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+            <yieldDuration>1 sec</yieldDuration>
+          </config>
+          <name>ListFile</name>
+          <relationships>
+            <autoTerminate>false</autoTerminate>
+            <name>success</name>
+          </relationships>
+          <style></style>
+          <type>org.apache.nifi.processors.standard.ListFile</type>
+        </processors>
+        <processors>
+          <id>bba1fccc-015b-1000-0000-000000000000</id>
+          <parentGroupId>bbd49233-015b-1000-0000-000000000000</parentGroupId>
+          <position>
+            <x>1381.1273592944644</x>
+            <y>312.5707572404066</y>
+          </position>
+          <config>
+            <bulletinLevel>WARN</bulletinLevel>
+            <comments></comments>
+            <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+            <descriptors>
+              <entry>
+                <key>Destination</key>
+                <value>
+                  <name>Destination</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Null Value</key>
+                <value>
+                  <name>Null Value</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Attributes List</key>
+                <value>
+                  <name>Attributes List</name>
+                </value>
+              </entry>
+              <entry>
+                <key>Include Core Attributes</key>
+                <value>
+                  <name>Include Core Attributes</name>
+                </value>
+              </entry>
+            </descriptors>
+            <executionNode>ALL</executionNode>
+            <lossTolerant>false</lossTolerant>
+            <penaltyDuration>30 sec</penaltyDuration>
+            <properties>
+              <entry>
+                <key>Destination</key>
+                <value>flowfile-attribute</value>
+              </entry>
+              <entry>
+                <key>Null Value</key>
+                <value>false</value>
+              </entry>
+              <entry>
+                <key>Attributes List</key>
+              </entry>
+              <entry>
+                <key>Include Core Attributes</key>
+                <value>true</value>
+              </entry>
+            </properties>
+            <runDurationMillis>0</runDurationMillis>
+            <schedulingPeriod>0 sec</schedulingPeriod>
+            <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+            <yieldDuration>1 sec</yieldDuration>
+          </config>
+          <name>AttributesToJSON</name>
+          <relationships>
+            <autoTerminate>false</autoTerminate>
+            <name>failure</name>
+          </relationships>
+          <relationships>
+            <autoTerminate>false</autoTerminate>
+            <name>success</name>
+          </relationships>
+          <style></style>
+          <type>org.apache.nifi.processors.standard.AttributesToJSON</type>
+        </processors>
+      </contents>
+      <name>Running Group</name>
+    </processGroups>
+  </snippet>
+  <timestamp>04/29/2017 23:50:35 BST</timestamp>
+</template>

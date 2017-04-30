@@ -2,7 +2,7 @@ import json
 import xml.etree.ElementTree as ET
 
 def update_metadata_from_properties(tree):
-    root = tree.getroot()
+    root = tree if isinstance(tree, ET.Element) else tree.getroot()
     for processor in root.iter('processors'):
         config = processor.find('config')
         if config is None:
@@ -24,13 +24,13 @@ def update_metadata_from_properties(tree):
             prop_el.set('name', key)
             prop_el.text = value
 
-        old_comments = (comments.text + '\n' if comments.text is not None else "")
-        comments.text = old_comments + ET.tostring(metadata_el)
+        #old_comments = (comments.text + '\n' if comments.text is not None else "")
+        comments.text = ET.tostring(metadata_el)
 
     return tree
 
 def update_properties_from_metadata(tree):
-    root = tree.getroot()
+    root = tree if isinstance(tree, ET.Element) else tree.getroot()
     for processor in root.iter('processors'):
         config = processor.find('config')
         if config is None:
